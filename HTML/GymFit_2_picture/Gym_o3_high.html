@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>GymFit Pro</title>
+  <!-- Bootstrap CSS -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+  />
+  <!-- Archivo CSS propio (opcional) -->
+  <link rel="stylesheet" href="css/estilos.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">GymFit Pro</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarResponsive"
+        aria-controls="navbarResponsive"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#servicios">Servicios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#horario">Horario</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#galeria">Galería</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Fin Navbar -->
+
+  <!-- Hero / Encabezado principal -->
+  <header class="bg-dark text-white text-center d-flex align-items-center justify-content-center" style="height: 60vh; background: url('img/fondo.jpg') no-repeat center center; background-size: cover;">
+    <div class="overlay" style="position: absolute; width: 100%; height: 60vh; top: 0; left: 0;"></div>
+    <div class="container position-relative" style="z-index: 2;">
+      <h1 class="display-4">Bienvenido a GymFit Pro</h1>
+      <p class="lead">Transforma tu cuerpo, mejora tu vida</p>
+      <a href="#servicios" class="btn btn-primary btn-lg">¡Únete ahora!</a>
+    </div>
+  </header>
+  <!-- Fin Hero -->
+
+  <!-- Sección Servicios -->
+  <section class="py-5" id="servicios">
+    <div class="container">
+      <h2 class="text-center mb-4">Nuestros Servicios</h2>
+      <div class="row">
+        <!-- Servicio 1 -->
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="img/f4.jpg" class="card-img-top" alt="Entrenamiento con pesas">
+            <div class="card-body">
+              <h5 class="card-title">Entrenamiento con pesas</h5>
+              <p class="card-text">
+                Equipo de última generación y entrenadores expertos para maximizar tus resultados.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- Servicio 2 -->
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="img/f5.jpg" class="card-img-top" alt="Clases de yoga">
+            <div class="card-body">
+              <h5 class="card-title">Clases de yoga</h5>
+              <p class="card-text">
+                Mejora tu flexibilidad, equilibrio y estado mental con nuestras clases de yoga.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- Servicio 3 -->
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="img/f6.jpg" class="card-img-top" alt="Entrenamiento personal">
+            <div class="card-body">
+              <h5 class="card-title">Entrenamiento personal</h5>
+              <p class="card-text">
+                Diseños de rutinas a tu medida con el apoyo de un entrenador personal.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Fin Sección Servicios -->
+
+  <!-- Sección Horario -->
+  <section class="py-5 bg-light" id="horario">
+    <div class="container">
+      <h2 class="text-center mb-4">Horario de Clases</h2>
+      <div class="table-responsive">
+        <table class="table table-bordered text-center">
+          <thead class="thead-dark">
+            <tr>
+              <th>Hora</th>
+              <th>Lunes</th>
+              <th>Martes</th>
+              <th>Miércoles</th>
+              <th>Jueves</th>
+              <th>Viernes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>07:00</td>
+              <td>Spinning</td>
+              <td>Yoga</td>
+              <td>Zumba</td>
+              <td>Spinning</td>
+              <td>HIIT</td>
+            </tr>
+            <tr>
+              <td>09:00</td>
+              <td>Pesas</td>
+              <td>Body Pump</td>
+              <td>Yoga</td>
+              <td>Body Combat</td>
+              <td>Zumba</td>
+            </tr>
+            <tr>
+              <td>18:00</td>
+              <td>Pilates</td>
+              <td>HIIT</td>
+              <td>Yoga</td>
+              <td>Spinning</td>
+              <td>Body Pump</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  <!-- Fin Sección Horario -->
+
+  <!-- Sección Galería -->
+  <section class="py-5" id="galeria">
+    <div class="container">
+      <h2 class="text-center mb-4">Galería</h2>
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <img src="img/f1.jpg" alt="Galería 1" class="img-fluid rounded">
+        </div>
+        <div class="col-md-4 mb-4">
+          <img src="img/f2.jpg" alt="Galería 2" class="img-fluid rounded">
+        </div>
+        <div class="col-md-4 mb-4">
+          <img src="img/f3.jpg" alt="Galería 3" class="img-fluid rounded">
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Fin Sección Galería -->
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center py-3">
+    <p class="mb-0">© 2025 GymFit Pro. Todos los derechos reservados.</p>
+  </footer>
+  <!-- Fin Footer -->
+
+  <!-- Scripts de Bootstrap (JS, Popper.js, jQuery) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

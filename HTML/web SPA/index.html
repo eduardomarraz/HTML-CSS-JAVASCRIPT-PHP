@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spa Calm Wellness - SPA</title>
+  <!-- Bootstrap CSS -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+  />
+  <!-- Iconos (Opcional) -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <!-- Estilos personalizados -->
+  <style>
+    /* Colores corporativos */
+    :root {
+      --color-primario: #04BFBF;  /* Turquesa */
+      --color-secundario: #403001; /* Marrón oscuro */
+    }
+
+    /* Ajustes globales */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: var(--color-secundario);
+    }
+    .navbar-brand img {
+      width: 30px;
+      margin-right: 8px;
+    }
+    .navbar-nav .nav-link {
+      color: #fff !important;
+    }
+
+    /* Secciones (todas ocultas por defecto para simular SPA) */
+    section {
+      display: none;
+      padding: 3rem 0;
+    }
+
+    /* HOME */
+    #home {
+      position: relative;
+      display: block; /* se muestra por defecto al iniciar */
+      min-height: 80vh;
+      background: url('img/damac-mallstreet-spa-banner.jpg') no-repeat center center;
+      background-size: cover;
+      color: #fff;
+      text-align: center;
+      padding: 3rem 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    #home::before {
+      content: "";
+      background-color: rgba(0, 0, 0, 0.5);
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    #home .contenido-home {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+    }
+    #home h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    #home p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    #home a.btn {
+      background-color: var(--color-primario);
+      border: none;
+      color: #fff;
+    }
+
+    /* Tratamientos */
+    #tratamientos h2 {
+      color: var(--color-secundario);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    #tratamientos h3 {
+      color: var(--color-secundario);
+      margin-top: 2rem;
+    }
+
+    /* Ofertas */
+    #ofertas h2 {
+      color: var(--color-secundario);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    /* Tarjetas de ofertas */
+    .oferta-card {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 2rem;
+    }
+    .oferta-card img {
+      width: 100%;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+    .oferta-card .card-body {
+      padding: 1rem;
+    }
+    .oferta-card .card-body h3 {
+      color: var(--color-secundario);
+    }
+    .oferta-card .card-body p {
+      margin-bottom: 0.5rem;
+    }
+    .oferta-card .btn-reserva {
+      background-color: var(--color-primario);
+      border: none;
+      color: #fff;
+    }
+
+    /* Instalaciones */
+    #instalaciones h2 {
+      color: var(--color-secundario);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .galeria-instalaciones img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+    }
+    .btn-ver-mas {
+      background-color: var(--color-primario);
+      border: none;
+      color: #fff;
+      margin-top: 1rem;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--color-secundario);
+      color: #fff;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+    .footer-links a {
+      color: #fff;
+      text-decoration: underline;
+      margin: 0 5px;
+    }
+    .footer-mapa {
+      width: 100%;
+      max-width: 600px;
+      margin: 1rem auto;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="#home">
+      <img src="img/logo.png" alt="Logo">Spa Calm Wellness
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarResponsive"
+      aria-controls="navbarResponsive"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      style="color: #fff;"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="#home">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="#tratamientos">Tratamientos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#ofertas">Ofertas</a></li>
+        <li class="nav-item"><a class="nav-link" href="#instalaciones">Instalaciones</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- FIN NAVBAR -->
+
+<!-- HOME -->
+<section id="home">
+  <div class="contenido-home">
+    <h1>Spa Calm Wellness</h1>
+    <p>Te proponemos un viaje repleto de experiencias y sensaciones a través de un entorno evocador y relajante concebido para tu bienestar.</p>
+    <a href="#" class="btn btn-lg">Reserva online</a>
+  </div>
+</section>
+<!-- FIN HOME -->
+
+<!-- TRATAMIENTOS -->
+<section id="tratamientos">
+  <div class="container">
+    <h2>Nuestros tratamientos</h2>
+    <p class="text-center mb-5">
+      Sola o en pareja, para aliviar tu espalda o devolver el brillo a tu piel, en nuestro Spa tienes todo lo que necesitas.
+    </p>
+
+    <h3>Circuito Bienestar</h3>
+    <div class="row">
+      <div class="col-md-6">
+        <p>
+          Recorre nuestro Circuito Bienestar de hidroterapia: ducha escocesa, sauna, poza fría, baño de vapor, fuente de hielo, ducha de aromaterapia, camas de burbujas, piscina activa, jacuzzi interior y exterior… 
+          Sumérjete en nuestra piscina de efectos, disfruta de ella tanto en el interior como al aire libre; 
+          descúbrete envuelto por la brisa mediterránea y déjate acariciar por el sol en nuestro jardín de sensaciones.
+        </p>
+      </div>
+      <div class="col-md-6">
+        <img src="img/-gr24170459.jpg" class="img-fluid rounded" alt="Circuito Bienestar">
+      </div>
+    </div>
+
+    <h3>Circuito Relajación</h3>
+    <div class="row">
+      <div class="col-md-6 order-md-2">
+        <p>
+          Déjate llevar por el ambiente y los aromas del Spa Calm Wellness y descubre cómo tu cuerpo y mente fluyen en armonía. 
+          Cabinas con aromaterapia, cromoterapia, musicoterapia,… todo ello con los productos de mayor calidad y dirigido por expertos profesionales. 
+          Cabinas donde el tiempo no existe, diseñadas para disfrutar de terapias exclusivas.
+        </p>
+      </div>
+      <div class="col-md-6 order-md-1">
+        <img src="img/-gr24327824.jpg" class="img-fluid rounded" alt="Circuito Relajación">
+      </div>
+    </div>
+  </div>
+</section>
+<!-- FIN TRATAMIENTOS -->
+
+<!-- OFERTAS DESTACADAS -->
+<section id="ofertas">
+  <div class="container">
+    <h2>Ofertas destacadas</h2>
+
+    <!-- Oferta 1 -->
+    <div class="oferta-card">
+      <img src="img/spa-atmosphere-c64cbce3.jpg" alt="Oferta 1">
+      <div class="card-body">
+        <h3>Circuito Bienestar con masaje completo</h3>
+        <p>Recorre nuestro Circuito Bienestar, y además relájate con un masaje completo de 55 minutos. De lunes a Viernes. 69€. Reserva ahora.</p>
+      </div>
+    </div>
+
+    <!-- Oferta 2 -->
+    <div class="oferta-card">
+      <img src="img/villa-magalean-spa-29618-1600-1200-crop.jpg" alt="Oferta 2">
+      <div class="card-body">
+        <h3>Peeling Corporal con circuito Relajación</h3>
+        <p>90 minutos de Spa con Peeling Corporal de 25 minutos. Este tratamiento exfolia e hidrata tu piel, dejándola como nueva. 49€. Reserva ahora.</p>
+      </div>
+    </div>
+
+    <!-- Oferta 3 -->
+    <div class="oferta-card">
+      <img src="img/strong-hotels-amb-spa-i-massatges-a-andorra-strong.jpg" alt="Oferta 3">
+      <div class="card-body">
+        <h3>Gastro Spa</h3>
+        <p>Disfruta del Circuito Relajación de 90 minutos, un relajante masaje de 25 minutos y completa el día en el restaurante Los Sentidos Wellness, donde te espera la mejor comida de fusión mediterránea de la zona. Fines de semana. 99€.</p>
+      </div>
+    </div>
+
+    <!-- CTA destacado -->
+    <div class="text-center mt-4">
+      <p class="font-weight-bold">
+        Reserva online antes del 14 de febrero y consigue un descuento del 40% en todas las experiencias en pareja.
+        <br/>
+        <a href="#" class="btn btn-ver-mas mt-2">Ver experiencias en pareja</a>
+      </p>
+    </div>
+  </div>
+</section>
+<!-- FIN OFERTAS DESTACADAS -->
+
+<!-- INSTALACIONES -->
+<section id="instalaciones">
+  <div class="container">
+    <h2>Nuestras instalaciones</h2>
+    <p class="text-center">
+      Nuestro balneario urbano cuenta con las últimas tecnologías en cabinas, aparatos de radiofrecuencia y demás tratamientos de salud. 
+      Cuidamos cada detalle para que todo sea perfecto en tu día de relax.
+    </p>
+
+    <!-- Galería fotográfica (5 imágenes en "home"/instalaciones) -->
+    <div class="row galeria-instalaciones mt-4">
+      <div class="col-md-4">
+        <img src="img/hotel-con-spa-en-Jaca.jpg" alt="Instalación 1" class="img-fluid">
+      </div>
+      <div class="col-md-4">
+        <img src="img/IMG_3838_0.jpg" alt="Instalación 2" class="img-fluid">
+      </div>
+      <div class="col-md-4">
+        <img src="img/RIOCCHH_gallery_Spa_spa03.jpg" alt="Instalación 3" class="img-fluid">
+      </div>
+      <div class="col-md-4">
+        <img src="img/tivoli_evora_ecoresort_tivoli_spa_1920x1280.webp" alt="Instalación 4" class="img-fluid">
+      </div>
+      <div class="col-md-4">
+        <img src="img/spa-atmosphere-c64cbce3.jpg" alt="Instalación 5 (repetida en Ofertas)" class="img-fluid">
+      </div>
+    </div>
+
+    <!-- Botón para ver más fotos (sin acción) -->
+    <div class="text-center">
+      <button class="btn btn-ver-mas">Ver más fotos</button>
+    </div>
+  </div>
+</section>
+<!-- FIN INSTALACIONES -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p class="mb-1">
+      Spa Calm Wellness. Calle Cartagena, número xx, Madrid - Spain<br/>
+      Teléfono de Reservas: +34 666 999 666<br/>
+      Horario: lunes a viernes de 10:00 a 14:00 y de 16:00 a 21:00. Sábados de 10:00 a 14:00<br/>
+      info@spacalmwellness.com
+    </p>
+
+    <!-- Enlaces -->
+    <div class="footer-links">
+      <a href="#">Nuestras instalaciones</a> |
+      <a href="#">Normas del Spa</a> |
+      <a href="#">Quienes somos</a> |
+      <a href="#">Política de privacidad</a> |
+      <a href="#">Política de cookies</a> |
+      <a href="#">Aviso legal</a>
+    </div>
+
+    <!-- Mapa -->
+    <div class="footer-mapa">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d24140.987730600453!2d-3.701180137935154!3d40.41536339684033!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42287c6cb70c35%3A0xe5c43f7d5c7b91fa!2sMadrid!5e0!3m2!1ses!2ses!4v1646042348892!5m2!1ses!2ses"
+        width="100%"
+        height="300"
+        style="border:0;"
+        allowfullscreen=""
+        loading="lazy"
+      ></iframe>
+    </div>
+
+    <p class="mt-3">© 2025 Spa Calm Wellness. Todos los derechos reservados.</p>
+  </div>
+</footer>
+<!-- FIN FOOTER -->
+
+<!-- SCRIPTS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+<script>
+  // Manejamos la navegación SPA con hash
+  document.addEventListener('DOMContentLoaded', function() {
+    handleHashChange(); // Mostrar sección inicial (home)
+  });
+
+  window.addEventListener('hashchange', handleHashChange);
+
+  function handleHashChange() {
+    const sections = document.querySelectorAll('section');
+    const hash = window.location.hash.replace('#','') || 'home';
+
+    sections.forEach(sec => {
+      sec.style.display = (sec.id === hash) ? 'block' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

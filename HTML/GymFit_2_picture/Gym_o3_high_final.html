@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>GymFit Pro - SPA</title>
+  <!-- Bootstrap CSS -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+  />
+  <!-- Iconos (Opcional) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+  <!-- Estilos adicionales -->
+  <style>
+    /* Para suavizar el desplazamiento con anclas */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Ocultamos todas las secciones por defecto, y las mostramos dinámicamente con JS */
+    section {
+      display: none;
+    }
+
+    /* El hero (inicio) puede tener altura fija para la portada */
+    #inicio {
+      position: relative;
+      height: 60vh;
+      background: url('img/fondo.jpg') no-repeat center center;
+      background-size: cover;
+      color: #fff;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #inicio .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 60vh;
+    }
+    #inicio .contenido-hero {
+      position: relative;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#inicio">GymFit Pro</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarResponsive"
+        aria-controls="navbarResponsive"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <!-- Enlaces de navegación con hashes para SPA -->
+          <li class="nav-item">
+            <a class="nav-link" href="#inicio">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#servicios">Servicios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#horarios">Horarios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#precios">Precios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#reservas">Reservas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contacto">Contacto</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#galeria">Galería</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Fin Navbar -->
+
+  <!-- Sección: INICIO (Hero) -->
+  <section id="inicio">
+    <div class="overlay"></div>
+    <div class="container contenido-hero">
+      <h1 class="display-4">Bienvenido a GymFit Pro</h1>
+      <p class="lead">Transforma tu cuerpo, mejora tu vida</p>
+      <a href="#servicios" class="btn btn-primary btn-lg">¡Únete ahora!</a>
+    </div>
+  </section>
+  <!-- Fin Sección: INICIO -->
+
+  <!-- Sección: SERVICIOS -->
+  <section class="py-5" id="servicios">
+    <div class="container">
+      <h2 class="text-center mb-4">Nuestros Servicios</h2>
+      <div class="row">
+        <!-- Servicio 1 -->
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="img/f4.jpg" class="card-img-top" alt="Entrenamiento con pesas">
+            <div class="card-body">
+              <h5 class="card-title">Entrenamiento con pesas</h5>
+              <p class="card-text">
+                Equipo de última generación y entrenadores expertos para maximizar tus resultados.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- Servicio 2 -->
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="img/f5.jpg" class="card-img-top" alt="Clases de yoga">
+            <div class="card-body">
+              <h5 class="card-title">Clases de yoga</h5>
+              <p class="card-text">
+                Mejora tu flexibilidad, equilibrio y estado mental con nuestras clases de yoga.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- Servicio 3 -->
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="img/f6.jpg" class="card-img-top" alt="Entrenamiento personal">
+            <div class="card-body">
+              <h5 class="card-title">Entrenamiento personal</h5>
+              <p class="card-text">
+                Diseños de rutinas a tu medida con el apoyo de un entrenador personal.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Fin Sección: SERVICIOS -->
+
+  <!-- Sección: HORARIOS -->
+  <section class="py-5 bg-light" id="horarios">
+    <div class="container">
+      <h2 class="text-center mb-4">Horario de Clases</h2>
+      <div class="table-responsive">
+        <table class="table table-bordered text-center">
+          <thead class="thead-dark">
+            <tr>
+              <th>Hora</th>
+              <th>Lunes</th>
+              <th>Martes</th>
+              <th>Miércoles</th>
+              <th>Jueves</th>
+              <th>Viernes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>07:00</td>
+              <td>Spinning</td>
+              <td>Yoga</td>
+              <td>Zumba</td>
+              <td>Spinning</td>
+              <td>HIIT</td>
+            </tr>
+            <tr>
+              <td>09:00</td>
+              <td>Pesas</td>
+              <td>Body Pump</td>
+              <td>Yoga</td>
+              <td>Body Combat</td>
+              <td>Zumba</td>
+            </tr>
+            <tr>
+              <td>18:00</td>
+              <td>Pilates</td>
+              <td>HIIT</td>
+              <td>Yoga</td>
+              <td>Spinning</td>
+              <td>Body Pump</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  <!-- Fin Sección: HORARIOS -->
+
+  <!-- Sección: PRECIOS -->
+  <section class="py-5" id="precios">
+    <div class="container">
+      <h2 class="text-center mb-4">Planes de Membresía</h2>
+      <div class="row">
+        <!-- Plan Básico -->
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-header bg-primary text-white text-center">
+              <h4>Plan Básico</h4>
+            </div>
+            <div class="card-body">
+              <p class="card-text">Acceso a las máquinas de pesas y cardio</p>
+              <p class="card-text">Clases grupales limitadas</p>
+              <h5 class="text-center">€25/mes</h5>
+            </div>
+          </div>
+        </div>
+        <!-- Plan Premium -->
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-header bg-success text-white text-center">
+              <h4>Plan Premium</h4>
+            </div>
+            <div class="card-body">
+              <p class="card-text">Acceso completo a todas las instalaciones</p>
+              <p class="card-text">Todas las clases grupales incluidas</p>
+              <p class="card-text">1 sesión de entrenador personal/mes</p>
+              <h5 class="text-center">€45/mes</h5>
+            </div>
+          </div>
+        </div>
+        <!-- Plan VIP -->
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-header bg-warning text-white text-center">
+              <h4>Plan VIP</h4>
+            </div>
+            <div class="card-body">
+              <p class="card-text">Acceso 24/7 a todas las instalaciones</p>
+              <p class="card-text">Clases y entrenador personal ilimitados</p>
+              <p class="card-text">Zona exclusiva de spa y masajes</p>
+              <h5 class="text-center">€70/mes</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Fin Sección: PRECIOS -->
+
+  <!-- Sección: RESERVAS -->
+  <section class="py-5 bg-light" id="reservas">
+    <div class="container">
+      <h2 class="text-center mb-4">Reservas de Clases</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <form id="reservationForm">
+            <div class="form-group">
+              <label for="reservaNombre">Nombre</label>
+              <input type="text" class="form-control" id="reservaNombre" name="reservaNombre" required />
+            </div>
+            <div class="form-group">
+              <label for="reservaEmail">Email</label>
+              <input type="email" class="form-control" id="reservaEmail" name="reservaEmail" required />
+            </div>
+            <div class="form-group">
+              <label for="reservaClase">Clase a Reservar</label>
+              <select class="form-control" id="reservaClase" name="reservaClase" required>
+                <option value="">Selecciona una clase...</option>
+                <option value="Spinning">Spinning</option>
+                <option value="Zumba">Zumba</option>
+                <option value="HIIT">HIIT</option>
+                <option value="Yoga">Yoga</option>
+                <option value="Body Pump">Body Pump</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="reservaFecha">Fecha</label>
+              <input type="date" class="form-control" id="reservaFecha" name="reservaFecha" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Reservar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Fin Sección: RESERVAS -->
+
+  <!-- Sección: CONTACTO -->
+  <section class="py-5" id="contacto">
+    <div class="container">
+      <h2 class="text-center mb-4">Contacto</h2>
+      <div class="row">
+        <!-- Info de contacto -->
+        <div class="col-md-6 mb-4">
+          <h4>Información de Contacto</h4>
+          <p><i class="fas fa-map-marker-alt"></i> Dirección: Calle Ejemplo 123, Madrid</p>
+          <p><i class="fas fa-phone-alt"></i> Teléfono: +34 600 000 000</p>
+          <p><i class="fas fa-envelope"></i> Email: info@gymfitpro.com</p>
+        </div>
+        <!-- Formulario de contacto -->
+        <div class="col-md-6">
+          <form id="contactForm">
+            <div class="form-group">
+              <label for="contactoNombre">Nombre</label>
+              <input type="text" class="form-control" id="contactoNombre" name="contactoNombre" required />
+            </div>
+            <div class="form-group">
+              <label for="contactoEmail">Email</label>
+              <input type="email" class="form-control" id="contactoEmail" name="contactoEmail" required />
+            </div>
+            <div class="form-group">
+              <label for="contactoMensaje">Mensaje</label>
+              <textarea class="form-control" id="contactoMensaje" name="contactoMensaje" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Fin Sección: CONTACTO -->
+
+  <!-- Sección: GALERÍA -->
+  <section class="py-5" id="galeria">
+    <div class="container">
+      <h2 class="text-center mb-4">Galería</h2>
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <img src="img/f1.jpg" alt="Galería 1" class="img-fluid rounded">
+        </div>
+        <div class="col-md-4 mb-4">
+          <img src="img/f2.jpg" alt="Galería 2" class="img-fluid rounded">
+        </div>
+        <div class="col-md-4 mb-4">
+          <img src="img/f3.jpg" alt="Galería 3" class="img-fluid rounded">
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Fin Sección: GALERÍA -->
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center py-3">
+    <p class="mb-0">© 2025 GymFit Pro. Todos los derechos reservados.</p>
+  </footer>
+  <!-- Fin Footer -->
+
+  <!-- Scripts de Bootstrap (JS, Popper.js, jQuery) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+
+  <!-- Script de enrutamiento y validación -->
+  <script>
+    // Al cargar la página, determinamos la sección a mostrar según el hash
+    document.addEventListener("DOMContentLoaded", function() {
+      handleHashChange(); // Mostrar la sección correspondiente al abrir la página
+    });
+
+    // Cada vez que cambie el hash (ej: #servicios, #horarios, etc.) mostramos la sección correspondiente
+    window.addEventListener("hashchange", handleHashChange);
+
+    function handleHashChange() {
+      const sectionId = window.location.hash.replace("#", "") || "inicio"; // Por defecto 'inicio'
+      showSection(sectionId);
+    }
+
+    function showSection(sectionId) {
+      // Ocultamos todas las secciones y mostramos solo la que coincide con el ID
+      const sections = document.querySelectorAll("section");
+      sections.forEach(sec => {
+        sec.style.display = (sec.id === sectionId) ? "block" : "none";
+      });
+      // Ajustar el scroll al inicio de la sección (opcional, se maneja con scroll-behavior: smooth)
+    }
+
+    // Validación básica del formulario de reservas
+    const reservationForm = document.getElementById("reservationForm");
+    if (reservationForm) {
+      reservationForm.addEventListener("submit", function(event) {
+        // Aquí puedes realizar validaciones más complejas si deseas
+        // Si algo falla:
+        // event.preventDefault();
+        // alert("Por favor, revisa los datos del formulario de reservas.");
+      });
+    }
+
+    // Validación básica del formulario de contacto
+    const contactForm = document.getElementById("contactForm");
+    if (contactForm) {
+      contactForm.addEventListener("submit", function(event) {
+        // Validación adicional si lo necesitas
+        // event.preventDefault();
+        // alert("Por favor, revisa los datos del formulario de contacto.");
+      });
+    }
+  </script>
+
+</body>
+</html>
