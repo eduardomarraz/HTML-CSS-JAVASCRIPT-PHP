@@ -1,4 +1,4 @@
-echo "# Spa Calm Wellness SPA
+<h1>Spa Calm Wellness SPA</h1> 
 
 ## Overview
 Spa Calm Wellness is a single-page application (SPA) designed for a modern wellness spa. This web app provides users with a comprehensive view of the spa’s services, treatments, exclusive offers, and facilities. The application features smooth, hash-based navigation between sections without requiring full page reloads, ensuring a seamless and responsive user experience.
@@ -22,25 +22,6 @@ Spa Calm Wellness is a single-page application (SPA) designed for a modern welln
 - **Bootstrap 4.6.2:** Ensures a responsive and visually appealing design.
 - **Font Awesome:** Provides scalable vector icons for enhanced UI elements.
 - **Google Maps Embed API:** Integrates an interactive map to display the spa’s location.
-
-## Folder Structure
-\`\`\`
-spa-calm-wellness/
-│   index.html
-│   README.md
-└───img/
-    │   gr24170459.jpg
-    │   gr24327824.jpg
-    │   damac-mallstreet-spa-banner.jpg
-    │   hotel-con-spa-en-Jaca.jpg
-    │   IMG_3838_0.jpg
-    │   logo.png
-    │   RIOCCHH_gallery_Spa_spa03.jpg
-    │   spa-atmosphere-c64cbce3.jpg
-    │   strong-hotels-amb-spa-i-massatges-a-andorra-strong.jpg
-    │   tivoli_evora_ecoresort_tivoli_spa_1920x1280.webp
-    │   villa-magalean-spa-29618-1600-1200-crop.jpg
-\`\`\`
 
 ## Installation & Usage
 
