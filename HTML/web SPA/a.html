@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista con íconos circulares</title>
+    <!-- Vincula los estilos de Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Vincula los estilos de Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        .icono-circular {
+            width: 40px;
+            height: 40px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <span class="icono-circular">
+                    <i class="fas fa-home"></i>
+                </span>
+                Inicio
+            </li>
+            <li class="list-group-item">
+                <span class="icono-circular">
+                    <i class="fas fa-user"></i>
+                </span>
+                Perfil
+            </li>
+            <li class="list-group-item">
+                <span class="icono-circular">
+                    <i class="fas fa-cog"></i>
+                </span>
+                Configuración
+            </li>
+            <li class="list-group-item">
+                <span class="icono-circular">
+                    <i class="fas fa-envelope"></i>
+                </span>
+                Mensajes
+            </li>
+        </ul>
+    </div>
+
+    <!-- Vincula los scripts de Bootstrap y jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+  <!-- Sección: RESERVAS -->
+  <section class="py-5 bg-light" id="reservas">
+    <div class="container">
+      <h2 class="text-center mb-4">Reservas de Clases</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <form id="reservationForm" action="http://www.holaformacion.com/curso/demo.php" method="post">
+            <div class="form-group">
+              <label for="reservaNombre">Nombre</label>
+              <input type="text" class="form-control" id="reservaNombre" name="reservaNombre" required />
+            </div>
+            <div class="form-group">
+              <label for="reservaEmail">Email</label>
+              <input type="email" class="form-control" id="reservaEmail" name="reservaEmail" required />
+            </div>
+            <div class="form-group">
+              <label for="reservaClase">Clase a Reservar</label>
+              <select class="form-control" id="reservaClase" name="reservaClase" required>
+                <option value="">Selecciona una clase...</option>
+                <option value="Spinning">Spinning</option>
+                <option value="Zumba">Zumba</option>
+                <option value="HIIT">HIIT</option>
+                <option value="Yoga">Yoga</option>
+                <option value="Body Pump">Body Pump</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="reservaFecha">Fecha</label>
+              <input type="date" class="form-control" id="reservaFecha" name="reservaFecha" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Reservar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+        
+        <script src="" async defer></script>
+    </body>
+</html>
