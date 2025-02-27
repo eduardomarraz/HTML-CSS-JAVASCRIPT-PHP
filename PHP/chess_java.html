@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ajedrez con validación simplificada</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #fafafa;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    #container {
+      display: flex;
+      gap: 20px;
+    }
+
+    #chessboard {
+      border-collapse: collapse;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      user-select: none;
+    }
+
+    #chessboard td {
+      width: 60px;
+      height: 60px;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 36px;
+      cursor: default;
+      transition: background-color 0.2s;
+      position: relative;
+    }
+
+    .white-square {
+      background-color: #eeeed2; 
+    }
+    .black-square {
+      background-color: #769656;
+    }
+
+    #chessboard td:hover {
+      opacity: 0.9;
+    }
+
+    /* Opcional: estilo para la pieza que se está arrastrando */
+    .dragging {
+      opacity: 0.5;
+    }
+
+    /* Panel lateral para mensajes e historial */
+    #sidebar {
+      width: 200px;
+      border: 1px solid #ccc;
+      background: #fff;
+      padding: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    }
+    #status {
+      margin-bottom: 10px;
+      font-weight: bold;
+      min-height: 20px;
+    }
+    #history h3 {
+      margin-top: 0;
+    }
+    #moveList {
+      max-height: 500px;
+      overflow-y: auto;
+      list-style: decimal inside;
+      margin: 0;
+      padding: 0;
+    }
+    #moveList li {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+<div id="container">
+  <table id="chessboard"></table>
+  <div id="sidebar">
+    <div id="status">Turno de Blancas</div>
+    <div id="history">
+      <h3>Movimientos</h3>
+      <ol id="moveList"></ol>
+    </div>
+  </div>
+</div>
+
+<script>
+/**********************************************************
+ * 1. Representación del tablero y las piezas
+ **********************************************************/
+ 
+// Cada pieza será un objeto con:
+// { type: 'pawn' | 'rook' | 'knight' | 'bishop' | 'queen' | 'king', color: 'white' | 'black' }
+// Y en el tablero se guardará null si no hay pieza.
+
+const EMPTY = null;
+
+// Tablero 8x8 (fila 0 = arriba, fila 7 = abajo)
+let board = createInitialBoard();
+
+// Variable para controlar el turno actual: 'white' o 'black'
+let currentTurn = 'white';
+
+// Historial de movimientos (strings)
+let moveHistory = [];
+
+/**********************************************************
+ * 2. Inicializar y renderizar el tablero en pantalla
+ **********************************************************/
+const chessboard = document.getElementById("chessboard");
+initializeBoardHTML();
+renderBoard();
+
+/**********************************************************
+ * 3. Funciones para crear, actualizar y renderizar
+ **********************************************************/
+
+function createInitialBoard() {
+  // Creamos un array 8x8 relleno de null
+  const newBoard = Array.from({ length: 8 }, () => Array(8).fill(EMPTY));
+
+  // --- Colocación de piezas Negras (fila 0 y 1) ---
+  // 1ª fila (0)
+  newBoard[0][0] = { type: 'rook',   color: 'black' };
+  newBoard[0][1] = { type: 'knight', color: 'black' };
+  newBoard[0][2] = { type: 'bishop', color: 'black' };
+  newBoard[0][3] = { type: 'queen',  color: 'black' };
+  newBoard[0][4] = { type: 'king',   color: 'black' };
+  newBoard[0][5] = { type: 'bishop', color: 'black' };
+  newBoard[0][6] = { type: 'knight', color: 'black' };
+  newBoard[0][7] = { type: 'rook',   color: 'black' };
+  // 2ª fila (1) -> peones negros
+  for (let c = 0; c < 8; c++) {
+    newBoard[1][c] = { type: 'pawn', color: 'black' };
+  }
+
+  // --- Colocación de piezas Blancas (fila 7 y 6) ---
+  // 8ª fila (7)
+  newBoard[7][0] = { type: 'rook',   color: 'white' };
+  newBoard[7][1] = { type: 'knight', color: 'white' };
+  newBoard[7][2] = { type: 'bishop', color: 'white' };
+  newBoard[7][3] = { type: 'queen',  color: 'white' };
+  newBoard[7][4] = { type: 'king',   color: 'white' };
+  newBoard[7][5] = { type: 'bishop', color: 'white' };
+  newBoard[7][6] = { type: 'knight', color: 'white' };
+  newBoard[7][7] = { type: 'rook',   color: 'white' };
+  // 7ª fila (6) -> peones blancos
+  for (let c = 0; c < 8; c++) {
+    newBoard[6][c] = { type: 'pawn', color: 'white' };
+  }
+
+  return newBoard;
+}
+
+function initializeBoardHTML() {
+  // Crea las filas y columnas de la tabla
+  for (let row = 0; row < 8; row++) {
+    const tr = document.createElement("tr");
+    for (let col = 0; col < 8; col++) {
+      const td = document.createElement("td");
+      td.setAttribute("data-row", row);
+      td.setAttribute("data-col", col);
+
+      // Color alterno de casilla
+      if ((row + col) % 2 === 0) {
+        td.classList.add("white-square");
+      } else {
+        td.classList.add("black-square");
+      }
+
+      // Eventos para Drag & Drop
+      td.addEventListener("dragover", onDragOver);
+      td.addEventListener("drop", onDrop);
+
+      tr.appendChild(td);
+    }
+    chessboard.appendChild(tr);
+  }
+}
+
+function renderBoard() {
+  // Recorre el board y dibuja (o limpia) cada celda
+  for (let row = 0; row < 8; row++) {
+    for (let col = 0; col < 8; col++) {
+      const td = getCellElement(row, col);
+      td.innerHTML = ""; // limpiar contenido anterior
+
+      const piece = board[row][col];
+      if (piece) {
+        // Creamos un span con el símbolo apropiado
+        const pieceSpan = document.createElement("span");
+        pieceSpan.textContent = getPieceSymbol(piece);
+        pieceSpan.draggable = true;
+        pieceSpan.classList.add("piece");
+        pieceSpan.addEventListener("dragstart", onDragStart);
+        pieceSpan.addEventListener("dragend", onDragEnd);
+
+        // Podríamos añadir color distinto o CSS por color:
+        // pieceSpan.style.color = (piece.color === 'white') ? '#fff' : '#000';
+        // Ajusta a tu gusto. Aquí solo dejamos el unicode.
+
+        td.appendChild(pieceSpan);
+      }
+    }
+  }
+}
+
+/**********************************************************
+ * 4. Funciones Drag & Drop
+ **********************************************************/
+
+let draggedPiece = null;    // objeto de la pieza arrastrada
+let originRow = null;
+let originCol = null;
+
+// Al iniciar el arrastre
+function onDragStart(e) {
+  const td = e.target.parentElement; // la celda <td>
+  originRow = parseInt(td.getAttribute("data-row"));
+  originCol = parseInt(td.getAttribute("data-col"));
+  
+  draggedPiece = board[originRow][originCol]; // la pieza en el array
+  
+  // Marcar visualmente
+  e.target.classList.add("dragging");
+
+  // DataTransfer (necesario para Firefox)
+  e.dataTransfer.setData("text/plain", "");
+}
+
+// Al finalizar el arrastre
+function onDragEnd(e) {
+  e.target.classList.remove("dragging");
+  draggedPiece = null;
+}
+
+// Permitir soltar en cualquier celda
+function onDragOver(e) {
+  e.preventDefault();
+}
+
+// Cuando se suelta la pieza en la celda de destino
+function onDrop(e) {
+  e.preventDefault();
+  const targetTd = e.currentTarget;
+  const targetRow = parseInt(targetTd.getAttribute("data-row"));
+  const targetCol = parseInt(targetTd.getAttribute("data-col"));
+
+  if (!draggedPiece) return;
+
+  // Comprobar que sea el turno de la pieza arrastrada
+  if (draggedPiece.color !== currentTurn) {
+    alert("No es tu turno.");
+    return;
+  }
+
+  // 1) Obtener todos los movimientos legales de la pieza arrastrada
+  const validMoves = getValidMoves(board, originRow, originCol);
+
+  // 2) Verificar si (targetRow, targetCol) está en la lista de movimientos legales
+  const isLegalMove = validMoves.some(
+    move => move.row === targetRow && move.col === targetCol
+  );
+
+  if (!isLegalMove) {
+    // Movimiento no válido
+    console.log("Movimiento ilegal");
+    return;
+  }
+
+  // 3) Simular el movimiento y comprobar si deja al propio rey en jaque
+  const backup = makeMove(board, originRow, originCol, targetRow, targetCol);
+
+  // Si el rey queda en jaque tras tu movimiento, es ilegal: revertimos
+  if (isCheckForColor(board, draggedPiece.color)) {
+    // revertir
+    undoMove(board, backup);
+    alert("Movimiento inválido: te dejas en jaque.");
+    return;
+  }
+
+  // 4) Movimiento válido, actualizamos el historial
+  const pieceSymbol = getPieceSymbol(draggedPiece);
+  const moveNotation = `${pieceSymbol} (${originRow},${originCol}) \u2192 (${targetRow},${targetCol})`;
+  moveHistory.push(moveNotation);
+  addMoveToHistory(moveNotation);
+
+  // 5) Redibujar el tablero tras el movimiento
+  renderBoard();
+
+  // 6) Comprobar si has dado jaque mate al oponente
+  const opponentColor = (currentTurn === 'white') ? 'black' : 'white';
+  
+  // Si el oponente está en jaque:
+  if (isCheckForColor(board, opponentColor)) {
+    // ¿Está en jaque mate?
+    if (isCheckmate(board, opponentColor)) {
+      alert(`¡Jaque mate! Ganan las ${currentTurn === 'white' ? 'blancas' : 'negras'}.`);
+      // Podrías reiniciar o finalizar el juego
+    } else {
+      alert("¡Jaque!");
+    }
+  }
+
+  // 7) Cambiar turno
+  currentTurn = opponentColor;
+  document.getElementById("status").textContent = `Turno de ${currentTurn === 'white' ? 'Blancas' : 'Negras'}`;
+}
+
+/**********************************************************
+ * 5. Cálculo de movimientos legales para cada pieza
+ **********************************************************/
+
+function getValidMoves(board, row, col) {
+  const piece = board[row][col];
+  if (!piece) return [];
+
+  switch (piece.type) {
+    case 'pawn':
+      return getPawnMoves(board, row, col);
+    case 'rook':
+      return getRookMoves(board, row, col);
+    case 'knight':
+      return getKnightMoves(board, row, col);
+    case 'bishop':
+      return getBishopMoves(board, row, col);
+    case 'queen':
+      return getQueenMoves(board, row, col);
+    case 'king':
+      return getKingMoves(board, row, col);
+    default:
+      return [];
+  }
+}
+
+// 5.1 Movimientos de Peón (simplificado: sin captura al paso, ni promoción)
+function getPawnMoves(board, row, col) {
+  const moves = [];
+  const piece = board[row][col];
+  const direction = (piece.color === 'white') ? -1 : 1; 
+  // (blanco hacia arriba row-1, negro hacia abajo row+1)
+
+  // 1) Mover 1 casilla hacia adelante si está libre
+  const fwdRow = row + direction;
+  if (isOnBoard(fwdRow, col) && board[fwdRow][col] === EMPTY) {
+    moves.push({ row: fwdRow, col: col });
+
+    // 2) Si está en la posición inicial, puede mover 2 casillas (si están libres)
+    const initialRow = (piece.color === 'white') ? 6 : 1;
+    if (row === initialRow) {
+      const fwd2Row = row + 2 * direction;
+      if (board[fwd2Row][col] === EMPTY) {
+        moves.push({ row: fwd2Row, col: col });
+      }
+    }
+  }
+
+  // 3) Capturas diagonales (una casilla en diagonal si hay enemigo)
+  const diagLeftCol = col - 1;
+  const diagRightCol = col + 1;
+  if (isOnBoard(fwdRow, diagLeftCol)) {
+    const targetPiece = board[fwdRow][diagLeftCol];
+    if (targetPiece && targetPiece.color !== piece.color) {
+      moves.push({ row: fwdRow, col: diagLeftCol });
+    }
+  }
+  if (isOnBoard(fwdRow, diagRightCol)) {
+    const targetPiece = board[fwdRow][diagRightCol];
+    if (targetPiece && targetPiece.color !== piece.color) {
+      moves.push({ row: fwdRow, col: diagRightCol });
+    }
+  }
+
+  return moves;
+}
+
+// 5.2 Movimientos de Torre
+function getRookMoves(board, row, col) {
+  const moves = [];
+  const piece = board[row][col];
+
+  // Recorre en las 4 direcciones (arriba, abajo, izquierda, derecha)
+  const directions = [
+    { dr: -1, dc:  0 }, // arriba
+    { dr:  1, dc:  0 }, // abajo
+    { dr:  0, dc: -1 }, // izquierda
+    { dr:  0, dc:  1 }  // derecha
+  ];
+
+  for (const dir of directions) {
+    let r = row + dir.dr;
+    let c = col + dir.dc;
+    while (isOnBoard(r, c)) {
+      const targetPiece = board[r][c];
+      if (!targetPiece) {
+        // Celda vacía, se puede mover
+        moves.push({ row: r, col: c });
+      } else {
+        // Hay una pieza
+        if (targetPiece.color !== piece.color) {
+          // Puedo capturar al oponente
+          moves.push({ row: r, col: c });
+        }
+        // Bloquea el avance en esa dirección
+        break;
+      }
+      r += dir.dr;
+      c += dir.dc;
+    }
+  }
+
+  return moves;
+}
+
+// 5.3 Movimientos de Caballo
+function getKnightMoves(board, row, col) {
+  const moves = [];
+  const piece = board[row][col];
+
+  const knightOffsets = [
+    { dr: -2, dc:  1 },
+    { dr: -2, dc: -1 },
+    { dr:  2, dc:  1 },
+    { dr:  2, dc: -1 },
+    { dr:  1, dc:  2 },
+    { dr:  1, dc: -2 },
+    { dr: -1, dc:  2 },
+    { dr: -1, dc: -2 },
+  ];
+
+  for (const offset of knightOffsets) {
+    const r = row + offset.dr;
+    const c = col + offset.dc;
+    if (isOnBoard(r, c)) {
+      const targetPiece = board[r][c];
+      if (!targetPiece || targetPiece.color !== piece.color) {
+        moves.push({ row: r, col: c });
+      }
+    }
+  }
+
+  return moves;
+}
+
+// 5.4 Movimientos de Alfil
+function getBishopMoves(board, row, col) {
+  const moves = [];
+  const piece = board[row][col];
+
+  // 4 diagonales
+  const directions = [
+    { dr: -1, dc: -1 },
+    { dr: -1, dc:  1 },
+    { dr:  1, dc: -1 },
+    { dr:  1, dc:  1 }
+  ];
+
+  for (const dir of directions) {
+    let r = row + dir.dr;
+    let c = col + dir.dc;
+    while (isOnBoard(r, c)) {
+      const targetPiece = board[r][c];
+      if (!targetPiece) {
+        moves.push({ row: r, col: c });
+      } else {
+        if (targetPiece.color !== piece.color) {
+          moves.push({ row: r, col: c });
+        }
+        // Bloqueamos aquí
+        break;
+      }
+      r += dir.dr;
+      c += dir.dc;
+    }
+  }
+
+  return moves;
+}
+
+// 5.5 Movimientos de Reina (combinación de torre + alfil)
+function getQueenMoves(board, row, col) {
+  // Básicamente la unión de rookMoves + bishopMoves
+  return [
+    ...getRookMoves(board, row, col),
+    ...getBishopMoves(board, row, col)
+  ];
+}
+
+// 5.6 Movimientos de Rey (simplificado, sin enroque)
+function getKingMoves(board, row, col) {
+  const moves = [];
+  const piece = board[row][col];
+
+  // El rey se puede mover 1 casilla en cualquier dirección
+  for (let dr = -1; dr <= 1; dr++) {
+    for (let dc = -1; dc <= 1; dc++) {
+      if (dr === 0 && dc === 0) continue; // no se queda quieto
+
+      const r = row + dr;
+      const c = col + dc;
+      if (isOnBoard(r, c)) {
+        const targetPiece = board[r][c];
+        if (!targetPiece || targetPiece.color !== piece.color) {
+          moves.push({ row: r, col: c });
+        }
+      }
+    }
+  }
+
+  return moves;
+}
+
+/**********************************************************
+ * 6. Comprobación de jaque y jaque mate
+ **********************************************************/
+
+// Devuelve true si el rey del color dado está bajo ataque
+function isCheckForColor(board, color) {
+  // 1) Localizar al rey de 'color'
+  const kingPos = findKing(board, color);
+  if (!kingPos) return false; // no hay rey (extraño, pero podría pasar)
+
+  // 2) Revisar todas las piezas enemigas a ver si pueden capturar al rey
+  const enemyColor = (color === 'white') ? 'black' : 'white';
+
+  // Recorre todo el tablero
+  for (let r = 0; r < 8; r++) {
+    for (let c = 0; c < 8; c++) {
+      const piece = board[r][c];
+      if (piece && piece.color === enemyColor) {
+        // Calcula movimientos posibles de esa pieza
+        const moves = getValidMoves(board, r, c);
+        // Si uno de esos movimientos coincide con la posición del rey => jaque
+        if (moves.some(m => m.row === kingPos.row && m.col === kingPos.col)) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
+
+// Encuentra la posición {row, col} del rey de un color dado
+function findKing(board, color) {
+  for (let r = 0; r < 8; r++) {
+    for (let c = 0; c < 8; c++) {
+      const piece = board[r][c];
+      if (piece && piece.type === 'king' && piece.color === color) {
+        return { row: r, col: c };
+      }
+    }
+  }
+  return null;
+}
+
+// Devuelve true si el color dado está en jaque y no puede salir => jaque mate
+function isCheckmate(board, color) {
+  if (!isCheckForColor(board, color)) {
+    return false; // si no está en jaque, no es jaque mate
+  }
+
+  // Si está en jaque, comprobamos si hay algún movimiento legal que lo salve
+  // Recorremos todas las piezas del color y vemos si alguna tiene un movimiento legal
+  // que al ejecutarse, saque al rey de jaque.
+  for (let r = 0; r < 8; r++) {
+    for (let c = 0; c < 8; c++) {
+      const piece = board[r][c];
+      if (piece && piece.color === color) {
+        const moves = getValidMoves(board, r, c);
+        // Probamos cada movimiento
+        for (const move of moves) {
+          const backup = makeMove(board, r, c, move.row, move.col);
+          const stillCheck = isCheckForColor(board, color);
+          // revertimos
+          undoMove(board, backup);
+          if (!stillCheck) {
+            // Encontramos un movimiento que salva al rey del jaque
+            return false;
+          }
+        }
+      }
+    }
+  }
+
+  // Si ningún movimiento libra del jaque => jaque mate
+  return true;
+}
+
+/**********************************************************
+ * 7. Funciones de ayuda para mover piezas en el array
+ **********************************************************/
+
+// Ejecuta un movimiento en el board, devolviendo datos para "deshacer" luego
+function makeMove(board, fromRow, fromCol, toRow, toCol) {
+  const movingPiece = board[fromRow][fromCol];
+  const capturedPiece = board[toRow][toCol];
+
+  // Guardamos la info para poder deshacer
+  const backup = {
+    fromRow, fromCol, toRow, toCol,
+    movingPiece,
+    capturedPiece
+  };
+
+  // Realizamos el movimiento
+  board[toRow][toCol] = movingPiece;
+  board[fromRow][fromCol] = EMPTY;
+
+  return backup;
+}
+
+// Deshace el movimiento usando la información de backup
+function undoMove(board, backup) {
+  board[backup.fromRow][backup.fromCol] = backup.movingPiece;
+  board[backup.toRow][backup.toCol] = backup.capturedPiece;
+}
+
+// Devuelve true si (r,c) está dentro del tablero
+function isOnBoard(r, c) {
+  return r >= 0 && r < 8 && c >= 0 && c < 8;
+}
+
+/**********************************************************
+ * 8. Funciones auxiliares (símbolos, DOM, etc.)
+ **********************************************************/
+
+// Devuelve un símbolo Unicode (o el que quieras) según la pieza
+function getPieceSymbol(piece) {
+  // Podrías usar imágenes en lugar de Unicode.
+  // Para hacerlo, retorna algo como: return "♙" ...
+  const { type, color } = piece;
+  // Distinguimos entre blanco y negro
+  // Nota: se pueden usar otros símbolos para diferenciarlos
+  const isWhite = (color === 'white');
+
+  switch (type) {
+    case 'pawn':   return isWhite ? '♙' : '♟';
+    case 'rook':   return isWhite ? '♖' : '♜';
+    case 'knight': return isWhite ? '♘' : '♞';
+    case 'bishop': return isWhite ? '♗' : '♝';
+    case 'queen':  return isWhite ? '♕' : '♛';
+    case 'king':   return isWhite ? '♔' : '♚';
+    default:       return '?';
+  }
+}
+
+function getCellElement(row, col) {
+  return chessboard.querySelector(`td[data-row='${row}'][data-col='${col}']`);
+}
+
+// Añade un movimiento al listado <ol> del historial
+function addMoveToHistory(moveString) {
+  const li = document.createElement("li");
+  li.textContent = moveString;
+  document.getElementById("moveList").appendChild(li);
+}
+</script>
+</body>
+</html>
